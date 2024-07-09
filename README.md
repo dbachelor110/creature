@@ -28,10 +28,10 @@ The project can store the personality test results into a smart contract and ren
 Users can connect the wallet on the homepage, or directly click the 'Experience Incubation' button to experience the incubation process.
 
 ## Tech stack
-React
-p5.js
-TypeScript
-Vite
-Node.js
-taquito.js
-helia.js
+- React
+- p5.js
+- TypeScript
+- Vite
+- Node.js
+- taquito.js
+- helia.js
