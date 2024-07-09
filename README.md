@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+## Introduction
+The project can store the personality test results into a smart contract and render a character shape on the front-end to achieve a personalized interactive experience. In addition, for users who do not have blockchain assets, a trial version is provided, and they can see what their test results will look like after rendering on the browser.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Preview
+[Incubation](https://dbachelor110.github.io/creature)
 
-Currently, two official plugins are available:
+## Installation Steps
+1. Clone:
+  ```sh
+  git clone https://github.com/dbachelor110/creature.git
+  ```
+2. Go to the project directory:
+  ```sh
+  cd creature
+  ```
+3. Install dependencies:
+  ```sh
+  npm install
+  ```
+4. Start the development server:
+  ```sh
+  npm run dev
+  ```
+5. View in browser
+  Open http://localhost:5173/ in your browser to view the app.
+   
+## How to use
+Users can connect the wallet on the homepage, or directly click the 'Experience Incubation' button to experience the incubation process.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tech stack
+React
+p5.js
+TypeScript
+Vite
+Node.js
+taquito.js
+helia.js
