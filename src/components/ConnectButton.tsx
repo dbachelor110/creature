@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import {
@@ -9,15 +9,12 @@ type ButtonProps = {
     Tezos: TezosToolkit;
     userAddress: string | undefined;
     setUserAddress: Dispatch<SetStateAction<string | undefined>>;
-    setWallet: Dispatch<SetStateAction<BeaconWallet | undefined>>;
     wallet: BeaconWallet | undefined;
 };
 
 const ConnectButton = ({
-    Tezos,
     userAddress,
     setUserAddress,
-    setWallet,
     wallet,
 }: ButtonProps): JSX.Element => {
     const connectWallet = async (): Promise<void> => {
@@ -37,29 +34,16 @@ const ConnectButton = ({
     const disconnectWallet = async (): Promise<void> => {
         try {
             await wallet!.clearActiveAccount();
-            setUserAddress(``);
+            setUserAddress(undefined);
         } catch (error) {
             console.log(error);
         }
     };
 
-    useEffect(() => {
-        (async () => {
-            const wallet = new BeaconWallet({
-                name: "My dApp",
-                preferredNetwork: NetworkType.GHOSTNET,
-                disableDefaultEvents: false,
-                enableMetrics: true,
-            });
-            Tezos.setWalletProvider(wallet);
-            setWallet(wallet);
-        })();
-    }, []);
-
     const Connector = <div className="buttons">
         <button type="button" className="button" onClick={connectWallet}>
             <span>
-                <i className="fas fa-wallet"></i>Connect wallet
+                <i className="fas fa-wallet"></i>連接錢包
             </span>
         </button>
     </div>
@@ -67,7 +51,7 @@ const ConnectButton = ({
     const UserAddressShower = <div className="buttons">
     <button type="button" className="button" onClick={disconnectWallet}>
             <span>
-                <i className="fas fa-wallet"></i>{`Dis ${userAddress?.slice(0,2)}...${userAddress?.slice(-4)}`}
+                <i className="fas fa-wallet"></i>{`登出 ${userAddress?.slice(0,2)}...${userAddress?.slice(-4)}`}
             </span>
         </button>
     </div>

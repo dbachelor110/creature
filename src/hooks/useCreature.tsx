@@ -1,31 +1,57 @@
 import { items } from "../lib/items";
 import { useState } from "react";
+
 export type Point = { x: number, y: number };
+
 export type BezierVertex = Point & {
     firstPull?: undefined | Point;
     seccendPull?: undefined | Point;
 }
+
 export type Angle = { x: number, y: number, t: number };
 export type Skin = { v1: number, v2: number, v3: number, v4: number };
+
+type Item = {
+    points: readonly BezierVertex[];
+    type: 'bezier';
+    roots?: {
+        [key: string]: Point;
+    };
+} | {
+    points: readonly (Point & { r: number })[];
+    type: 'circle';
+    roots?: {
+        [key: string]: Point;
+    };
+};
+
+type CreatureItem<T> = T[keyof T];
+
+type CreatureHand = CreatureItem<typeof items.leftHands> | CreatureItem<typeof items.rightHands>;
+
+type CreatureLeg = CreatureItem<typeof items.leftLegs> | CreatureItem<typeof items.rightLegs>;
+
 export type CreatureItems = {
-    head?: any,
-    body?: any,
-    accessorie?: any,
-    leftHand?: any,
-    rightHand?: any,
-    leftLeg?: any,
-    rightLeg?: any,
-    leftEye?: any,
-    rightEye?: any,
-    mouth?: any,
+    head?: CreatureItem<typeof items.heads>[];
+    body?: CreatureItem<typeof items.bodys>[];
+    accessorie?: CreatureItem<typeof items.accessories>[];
+    leftHand?: CreatureHand[];
+    rightHand?: CreatureHand[];
+    leftLeg?: CreatureLeg[];
+    rightLeg?: CreatureLeg[];
+    leftEye?: CreatureItem<typeof items.eyes>[];
+    rightEye?: CreatureItem<typeof items.eyes>[];
+    mouth?: CreatureItem<typeof items.mouths>[];
     roots?: {
         [key: string]: {
             x: number;
             y: number;
         }
     };
-    [key:string]:any;
+} & {
+    [key: string]: Item[];
 };
+
 export type CreatureState = {
     (): void;
     state: {
@@ -151,14 +177,14 @@ const getItemsBySkin = (skin: Skin) => {
     return Items;
 }
 export const useCreature = (skin: Skin) => {
-    const [Items, _setItems] = useState(getItemsBySkin(skin));
+    const [Items] = useState(getItemsBySkin(skin));
     const [location, _setLocation] = useState({ x: 0, y: 0 });
     const [target, _setTarget] = useState({ x: 0, y: 0 });
     const [moving, _setMoving] = useState(false);
     const [speed, _setSpeed] = useState(1);
-    const [addSpeed, _setAddSpeed] = useState(1);
+    const [addSpeed] = useState(1);
     const [angle, _setAngle] = useState({ x: 0, y: 0, t: 0 });
-    const [roots, _setRoots] = useState(Items.roots);
+    const [roots] = useState(Items.roots);
 
     const creatureState = {
         Skin:skin,
@@ -172,7 +198,7 @@ export const useCreature = (skin: Skin) => {
         roots: roots,
     }
 
-    const creature = () => { };
+    const creature = () => {};
     creature.state = creatureState;
     creature.go = (target: Point, angle: Angle) => {
         _setMoving(true);

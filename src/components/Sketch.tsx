@@ -4,7 +4,9 @@ import {
   SketchProps
 } from "@p5-wrapper/react";
 import { useCreature, isSamePoint, addPointPair, CreatureState, BezierVertex, Angle, Skin } from "../hooks/useCreature";
+
 type Point = { x: number, y: number, [key: string]: number };
+
 type Angeles = {
   leftHand:number[],
   rightHand:number[],
@@ -49,7 +51,7 @@ function sketch(p5: P5CanvasInstance<MySketchProps>) {
     const t = dist(fromPoint, toPoint);
     return { x: toPoint.x - fromPoint.x, y: toPoint.y - fromPoint.y, t: t };
   };
-  const showBezier = (points: BezierVertex[]) => {
+  const showBezier = (points: readonly BezierVertex[]) => {
     p5.beginShape();
     points.forEach((point) => {
       if (point.firstPull && point.seccendPull) {
@@ -67,8 +69,8 @@ function sketch(p5: P5CanvasInstance<MySketchProps>) {
     });
     p5.endShape();
   };
-  const showCircle = (points: Point[], root: Point) => {
-    for (let point of points) {
+  const showCircle = (points: readonly Point[], root: Point) => {
+    for (const point of points) {
       const drowPoint = addPointPair(root, point);
       p5.circle(drowPoint.x, drowPoint.y, point.r);
     }
@@ -116,14 +118,15 @@ function sketch(p5: P5CanvasInstance<MySketchProps>) {
   };
   creature.show = () => {
     // console.info(creatureState.state.Items);
-    for (let key of Object.keys(creatureState.state.roots)) {
+    for (const key of Object.keys(creatureState.state.roots)) {
       if (key in creatureState.state.Items) {
         const itemsArray = creatureState.state.Items[key];
-        if (!itemsArray) return;
+        if (!(itemsArray instanceof Array)) return;
+        
         // temp location
         const location = { ...creatureState.state.location };
         UpAndDownItemKeys.has(key) ? location.y += AnimationState.get() : {};
-        for (let item of itemsArray) {
+        for (const item of itemsArray) {
           const root = {
             x: right ? creatureState.state.roots[key].x : -creatureState.state.roots[key].x,
             y: creatureState.state.roots[key].y

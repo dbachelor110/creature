@@ -4,7 +4,7 @@ const Form = ({
   setIncubating,
 
 }: {
-  setSkin: (skin: string) => any;
+  setSkin: (skin: string) => void;
   setIncubating: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,12 +12,12 @@ const Form = ({
   const incubate = async () => {
     const formElement = document.getElementById("skinForm") as HTMLFormElement;
       if(!formElement) return
-      let formData = new FormData(formElement);
+      const formData = new FormData(formElement);
 
       // 處理資料
       // 宣告字串
       let outPutStr = ``;
-      for (var dataPair of formData.entries()) {
+      for (const dataPair of formData.entries()) {
           outPutStr +=`${dataPair[1]}`;
       }
       // alert(outPutStr);
